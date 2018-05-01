@@ -1,10 +1,51 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
 
+exports.loadJavaScript =({ include, exclude } = {} ) => ({
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include,
+        exclude,
+        use: 'babel-loader',
+      },
+    ],
+  },
+});
+
 exports.autoprefix = () => ({
   loader: "postcss-loader",
   options: {
     plugins: () => [require("autoprefixer")()],
+  },
+});
+
+exports.loadImages = ({ include, exclude, options } = {} ) => ({
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg)$/,
+        include,
+        exclude,
+        use: [
+          {
+            loader: 'url-loader',
+            options,
+
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true,
+              webp: {
+                quality: 75
+              },
+            },
+          }
+        ]
+      },
+    ],
   },
 });
 
