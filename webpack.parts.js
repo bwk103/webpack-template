@@ -3,6 +3,13 @@ const PurifyCSSPlugin = require('purifycss-webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const UglifyWebpackPlugin = require('uglifyjs-webpack-plugin');
+
+exports.minifyJavaScript = () => ({
+  optimization: {
+    minimizer: [new UglifyWebpackPlugin({ sourceMap: true })],
+  },
+});
 
 exports.attachRevision = () => ({
   plugins: [
