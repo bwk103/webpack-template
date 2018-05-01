@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const PurifyCSSPlugin = require('purifycss-webpack');
 
 exports.extractCSS = ({ include, exclude, use }) => {
   const plugin = new ExtractTextPlugin({
@@ -22,6 +23,10 @@ exports.extractCSS = ({ include, exclude, use }) => {
     plugins: [plugin],
   };
 };
+
+exports.purifyCSS = ({ paths }) => ({
+  plugins: [new PurifyCSSPlugin({ paths })],
+});
 
 exports.devServer = ({ host, port } = {}) => ({
   devServer: {
